@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ActivaFit · Retención de socios</title>
+<meta name="description" content="Panel para que un gimnasio identifique socios con riesgo de abandono.">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<header class="cabecera">
+  <p class="marca">ActivaFit</p>
+  <nav aria-label="Principal">
+    <ul>
+      <li><a href="#panel" data-vista="panel">Panel</a></li>
+      <li><a href="#socios" data-vista="socios">Socios</a></li>
+      <li><a href="#evaluar" data-vista="evaluar">Evaluar socio</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="contenido" tabindex="-1">
+  <p id="estado" role="status"></p>
+
+  <section id="panel" aria-labelledby="t-panel">
+    <h1 id="t-panel" tabindex="-1">Quién necesita una llamada esta semana</h1>
+    <p class="intro">Estimamos la probabilidad de abandono de cada socio con su historial de asistencia y renovaciones.</p>
+    <div class="kpis">
+      <div class="kpi alto"><span class="n" id="k-alto">0</span><span>socios con riesgo alto</span></div>
+      <div class="kpi medio"><span class="n" id="k-medio">0</span><span>socios con riesgo medio</span></div>
+      <div class="kpi bajo"><span class="n" id="k-bajo">0</span><span>socios con riesgo bajo</span></div>
+    </div>
+    <dl class="ingresos">
+      <div><dt>Ingreso mensual en riesgo</dt><dd id="k-riesgo">S/ 0</dd></div>
+      <div><dt>Socios contactados</dt><dd id="k-contactados">0</dd></div>
+      <div><dt>Ingreso mensual retenido estimado</dt><dd id="k-retenido">S/ 0</dd></div>
+    </dl>
+    <p class="nota">El ingreso retenido supone que <span id="k-exito">30</span>% de los contactados de riesgo alto o medio se queda. Es un supuesto, no una medición.</p>
+  </section>
+
+  <section id="socios" aria-labelledby="t-socios" hidden>
+    <h2 id="t-socios" tabindex="-1">Socios ordenados por riesgo</h2>
+    <div class="filtros">
+      <div class="campo"><label for="buscar">Buscar por nombre o código</label>
+        <input id="buscar" type="search" autocomplete="off"></div>
+      <div class="campo"><label for="nivel">Nivel de riesgo</label>
+        <select id="nivel"><option value="todos">Todos</option><option value="alto">Alto</option><option value="medio">Medio</option><option value="bajo">Bajo</option></select></div>
+    </div>
+    <p id="conteo" aria-live="polite"></p>
+    <div class="tabla-wrap" tabindex="0" role="region" aria-label="Tabla de socios">
+      <table>
+        <caption class="sr">Socios con su probabilidad de abandono</caption>
+        <thead><tr><th scope="col">Socio</th><th scope="col">Antigüedad</th><th scope="col">Visitas</th><th scope="col">Renovaciones</th><th scope="col">Riesgo</th><th scope="col">Acción</th></tr></thead>
+        <tbody id="filas"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="evaluar" aria-labelledby="t-evaluar" hidden>
+    <h2 id="t-evaluar" tabindex="-1">Evaluar a un socio</h2>
+    <p class="intro">Ingresa los datos de un socio para ver su riesgo de abandono.</p>
+    <form id="form" novalidate>
+      <div id="resumen-errores" class="errores" role="alert" tabindex="-1" hidden></div>
+      <div class="rejilla">
+        <div class="campo"><label for="edad">Edad (años)</label><input id="edad" name="edad" type="number" inputmode="numeric" aria-describedby="e-edad"><span class="err" id="e-edad"></span></div>
+        <div class="campo"><label for="genero">Género</label><select id="genero" name="genero" aria-describedby="e-genero"><option value="">Elige una opción</option><option value="Female">Femenino</option><option value="Male">Masculino</option></select><span class="err" id="e-genero"></span></div>
+        <div class="campo"><label for="antiguedad">Antigüedad (meses)</label><input id="antiguedad" name="antiguedad" type="number" inputmode="numeric" aria-describedby="e-antiguedad"><span class="err" id="e-antiguedad"></span></div>
+        <div class="campo"><label for="ltv">Valor acumulado (S/)</label><input id="ltv" name="ltv" type="number" step="0.01" inputmode="decimal" aria-describedby="e-ltv"><span class="err" id="e-ltv"></span></div>
+        <div class="campo"><label for="frecuencia">Frecuencia promedio (visitas por semana)</label><input id="frecuencia" name="frecuencia" type="number" step="0.01" inputmode="decimal" aria-describedby="e-frecuencia"><span class="err" id="e-frecuencia"></span></div>
+        <div class="campo"><label for="visitas">Visitas registradas</label><input id="visitas" name="visitas" type="number" inputmode="numeric" aria-describedby="e-visitas"><span class="err" id="e-visitas"></span></div>
+        <div class="campo"><label for="actividades">Actividades que practica</label><input id="actividades" name="actividades" type="number" inputmode="numeric" aria-describedby="e-actividades"><span class="err" id="e-actividades"></span></div>
+        <div class="campo"><label for="renovaciones">Renovaciones</label><input id="renovaciones" name="renovaciones" type="number" inputmode="numeric" aria-describedby="e-renovaciones"><span class="err" id="e-renovaciones"></span></div>
+      </div>
+      <button type="submit">Calcular riesgo</button>
+    </form>
+    <div id="resultado" class="resultado" role="status" aria-live="polite"></div>
+  </section>
+</main>
+<footer><p>ActivaFit · Prototipo v1 para el curso de Desarrollo Front-End · Los datos de ejemplo son ficticios.</p></footer>
+<script src="js/app.js"></script>
+</body>
+</html>
